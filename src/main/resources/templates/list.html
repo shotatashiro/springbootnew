@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${title}"></title>
+  
+　　<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+</head>
+<body>
+	<div th:replace="~{layout/navi::navbar}"></div>
+
+	<div class="text-center p-4">
+	 	<table class="table table-bordered table-hover">
+	 		<thead>
+	 			<tr>
+	 				<th>ID</th>
+	 				<th>名前</th>
+	 				<th>パスワード</th>
+	 				<th>メールアドレス</th>
+	 				<th>問い合わせ内容</th>
+	 				<th>詳細</th>
+	 				<th>編集</th>
+	 				<th>削除</th>
+	 			</tr>
+	 		</thead>
+	 		<tbody>
+	 			<tr th:each="list:${inquiryForm}" th:object="${list}">
+	 				<!--  <td>
+	 					<a th:href="@{/inquiry/{id}(id=*{id})}" th:text="*{id}"></a>
+	 					
+	 				</td>-->
+	 				<td th:text="*{id}"></td>
+	 				<td th:text="*{name}"></td>
+	 				<td th:text="*{pass}"></td>
+	 				<td th:text="*{email}"></td>
+	 				<td th:text="*{text}"></td>
+	 				<td><a class="btn btn-default btn-xs" th:href="@{/inquiry/{id}(id=*{id})}">詳細</a></td>
+	 				<td><a class="btn btn-default btn-xs" th:href="@{/inquiry/{id}/edit(id=*{id})}">編集</a></td>
+	 				<td>
+	 					<form th:action="@{/inquiry/{id}(id=*{id})}" th:method="delete">
+ 							<input type="submit" value="削除">
+ 						</form>
+	 				</td>
+	 			</tr>
+	 		</tbody>
+	 	</table>
+	 	<!--  <a th:href="@{form}">新規入力画面へ</a>-->
+	</div>
+
+
+  <!-- Bootstrapの設定 -->
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <!-- Bootstrapの設定 -->
+    <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+</body>
+</html>

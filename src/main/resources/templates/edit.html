@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${title}"></title>
+  
+　　<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+</head>
+<body>
+	<div th:replace="~{layout/navi::navbar}"></div>
+	<div th:object="${inquiryForm}" class="text-center p-4">
+		<h2 th:text="${headLine}"></h2>
+		<form th:action="@{/inquiry/{id}(id=*{id})}" th:method="put">
+			<div class="form-group" th:classappend="${#fields.hasErrors('name')}? has-error">
+				<label class="control-label" for="name">名前</label><br>
+				<input class="form-control" type="text" name="name" th:value="*{name}" id="name"><br>
+				<div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+			</div>
+			
+			<div class="form-group" th:classappend="${#fields.hasErrors('pass')}? has-error">
+				<label class="control-label" for="pass">password</label><br>
+				<input class="form-control" type="text" name="pass" th:value="*{pass}" id="pass"><br>
+				<div class="text-danger" th:if="${#fields.hasErrors('pass')}" th:errors="*{pass}"></div>
+			</div>
+			
+			<div class="form-group" th:classappend="${#fields.hasErrors('email')}? has-error">
+				<label class="control-label" for="email">メールアドレス</label><br>
+				<input class="form-control" type="text" name="email" th:value="*{email}" id="email"><br>
+				<div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+			</div>
+			<div class="form-group" th:classappend="${#fields.hasErrors('text')}? has-error">
+				<label class="control-label" for="text">問い合わせ内容</label><br>
+				<textarea class="form-control" name="name" th:field="*{text}" id="text" cols="20" rows="5"></textarea><br>
+				<div class="text-danger" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></div>
+			</div>
+			<input type="submit" value="更新">
+		
+		</form>
+			<a th:href="@{/inquiry/{id}(id=*{id})}">戻る</a>
+	</div>
+  <!-- Bootstrapの設定 -->
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <!-- Bootstrapの設定 -->
+    <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+</body>
+</html>

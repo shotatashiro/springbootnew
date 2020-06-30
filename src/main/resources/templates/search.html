@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+          xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${title}"></title>
+  
+　　<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+</head>
+<body>
+	<div th:replace="~{layout/navi::navbar}"></div>
+	
+	
+	
+
+	<div class="text-center p-4">  <!--  th:object=${inquiryForm} -->
+		<h2 th:text="${headLine}">問い合わせ検索</h2>
+		<form th:action="@{/inquiry/result}" method="get">   <!-- (name=*{name},password=*{password}) -->
+			<label for="name">名前</label>
+			<input type= "text" name="name" id="name">
+			
+			<label for="pass">パスワード</label>
+			<input type= "password" name="pass" id="pass">
+			<input type="submit" value="検索">
+		</form>
+	 	 <table class="table table-bordered table-hover">
+	 	 	<thead>
+	 			<tr>
+	 				<th>ID</th>
+	 				<th>名前</th>
+	 				<th>メールアドレス</th>
+	 				<th>問い合わせ内容</th>
+	 				<th>詳細</th>
+	 				<th sec:authorize="hasRole('ADMIN')">編集</th>
+	 				<th sec:authorize="hasRole('ADMIN')">削除</th>
+	 			</tr>
+	 		</thead>
+	 		<tbody>
+	 			<tr th:each="list:${inquiryForm}" th:object="${list}">
+	 				<!--  <td>
+	 					<a th:href="@{/inquiry/{id}(id=*{id})}" th:text="*{id}"></a>
+	 					
+	 				</td>-->
+	 				<td th:text="*{id}"></td>
+	 				<td th:text="*{name}"></td>
+	 				<!-- <td th:text="*{password}"></td>-->
+	 				<td th:text="*{email}"></td>
+	 				<td th:text="*{text}"></td>
+	 				<td><a class="btn btn-default btn-xs" th:href="@{/inquiry/{id}(id=*{id})}">詳細</a></td>
+	 				<td><a class="btn btn-default btn-xs" th:href="@{/inquiry/{id}/edit(id=*{id})}">編集</a></td>
+	 				<td>
+	 					<form th:action="@{/inquiry/{id}(id=*{id})}" th:method="delete">
+ 							<input type="submit" value="削除">
+ 						</form>
+	 				</td>
+	 			</tr>
+	 		</tbody>
+	 	</table>
+	</div>
+
+
+  <!-- Bootstrapの設定 -->
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <!-- Bootstrapの設定 -->
+    <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+</body>
+</html>

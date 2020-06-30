@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+          xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${title}"></title>
+  
+　　<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+</head>
+<body>
+	<div th:replace="~{layout/navi::navbar}"></div>
+	 <div class="text-center" th:object="${inquiryForm}">
+	 	<p>名前:<span th:text="*{name}"></span></p>
+	 	<p>メールアドレス:<span th:text="*{email}"></span></p>
+	 	<p>問い合わせ内容:<span th:text="*{text}"></span></p>
+	 	<div sec:authorize="hasRole('ADMIN')">
+ 		<form th:action="@{/inquiry/{id}/edit(id=*{id})}" method="get" action="#" >
+ 			<input type="submit" value="編集">
+ 		</form>
+ 		<form th:action="@{/inquiry/{id}(id=*{id})}" th:method="delete">
+ 			<input type="submit" value="削除">
+ 		</form>
+ 		
+ 			<a th:href="@{/inquiry/list}">戻る</a>
+ 		</div>
+ 	
+ 		
+ 	</div>
+  <!-- Bootstrapの設定 -->
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <!-- Bootstrapの設定 -->
+    <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+</body>
+</html>
